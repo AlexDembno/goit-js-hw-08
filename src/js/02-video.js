@@ -14,8 +14,11 @@ function setTime(data) {
 }
 
 function getTime() {
-  const setLocal = localStorage.getItem('videoplayer-current-time');
-  return setLocal === null ? undefined : JSON.parse(setLocal);
+  const setLocal = JSON.parse(localStorage.getItem('videoplayer-current-time'));
+  if (setLocal) {
+    return setLocal;
+  }
+  // return setLocal === null ? undefined : JSON.parse(setLocal);
 }
 
 function loadTime() {
