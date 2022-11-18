@@ -23,9 +23,13 @@ function setItem(event) {
 
 function sendForm(event) {
   event.preventDefault();
-  console.log(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)));
-  event.target.reset();
-  localStorage.removeItem(LOCALSTORAGE_KEY);
+  if (refs.emailEl.value === '' || refs.textareaEl.value === '') {
+    alert('все поля должны быть заполнены');
+  } else {
+    console.log(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)));
+    event.target.reset();
+    localStorage.removeItem(LOCALSTORAGE_KEY);
+  }
 }
 
 function getInput() {
