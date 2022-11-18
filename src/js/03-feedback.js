@@ -23,6 +23,7 @@ function setItem(event) {
 
 function sendForm(event) {
   event.preventDefault();
+  console.log(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)));
   event.target.reset();
   localStorage.removeItem(LOCALSTORAGE_KEY);
 }
