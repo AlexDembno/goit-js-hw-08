@@ -14,8 +14,9 @@ function setTime(data) {
 }
 
 function loadTime() {
-  const setLocal = JSON.parse(localStorage.getItem('videoplayer-current-time'));
+  let setLocal = localStorage.getItem('videoplayer-current-time');
   if (setLocal) {
+    setLocal = JSON.parse(setLocal);
     player.setCurrentTime(setLocal.seconds);
   }
 }

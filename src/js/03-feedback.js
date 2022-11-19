@@ -1,29 +1,24 @@
 import throttle from 'lodash.throttle';
 
-const refs = {
-  formEl: document.querySelector('form'),
-  emailEl: document.querySelector('input'),
-  textareaEl: document.querySelector('textarea'),
-};
-
+const formEl = document.querySelector('form');
 const LOCALSTORAGE_KEY = 'feedback-form-state';
-
-const formData = {};
 
 getInput();
 
-refs.formEl.addEventListener('submit', sendForm);
-refs.formEl.addEventListener('input', throttle(setItem, 500));
+formEl.addEventListener('submit', sendForm);
+formEl.addEventListener('input', throttle(setItem, 500));
 
 function setItem(event) {
-  formData[event.target.name] = event.target.value;
-  const messege = JSON.stringify(formData);
+  let filter = localStorage.getItem(LOCALSTORAGE_KEY);
+  filter = filter ? JSON.parse(filter) : {};
+  filter[event.target.name] = event.target.value;
+  const messege = JSON.stringify(filter);
   localStorage.setItem(LOCALSTORAGE_KEY, messege);
 }
 
 function sendForm(event) {
   event.preventDefault();
-  if (refs.emailEl.value === '' || refs.textareaEl.value === '') {
+  if (formEl.elements === '') {
     alert('все поля должны быть заполнены');
   } else {
     console.log(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)));
@@ -33,10 +28,12 @@ function sendForm(event) {
 }
 
 function getInput() {
-  const qwer = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+  let getLocal = localStorage.getItem(LOCALSTORAGE_KEY);
 
-  if (qwer) {
-    refs.emailEl.value = qwer.email;
-    refs.textareaEl.value = qwer.message;
+  if (getLocal) {
+    getLocal = JSON.parse(getLocal);
+    Object.entries(getLocal).forEach(([name, value]) => {
+      formEl.elements[name].value = value;
+    });
   }
 }
